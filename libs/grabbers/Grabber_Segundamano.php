@@ -15,6 +15,9 @@ class Grabber_Segundamano
         $o = 1;
         do {
             $content = curl($url."?od=1&o=".$o);
+            if (!$content) {
+                Cli::finish("Empty content!", "error");
+            }
             //Parse HTML
             $html = str_get_html($content);
             if (is_object($html)) {
@@ -31,6 +34,9 @@ class Grabber_Segundamano
     public static function grabCar($url)
     {
         $content = curl($url);
+        if (!$content) {
+            Cli::finish("Empty content!", "error");
+        }
         $title = get_between($content, "<title>", "</title>");
         $websiteId = "segundamano.es".get_between($content, '<input type="hidden" name="id" value="', "'");
         Cli::output("Grabbing: ".$title, "notice");

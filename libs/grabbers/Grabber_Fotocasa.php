@@ -9,6 +9,9 @@ class Grabber_Fotocasa
         $total = 0;
         do {
             $content = curl($url."&crp=".$crp);
+            if (!$content) {
+                Cli::finish("Empty content!", "error");
+            }
             if (strstr($content, "Verificación Anti-Robots")) {
                 Cli::finish("Captcha!", "error");
             }
@@ -35,6 +38,9 @@ class Grabber_Fotocasa
     public static function grabHouse($url)
     {
         $content = curl($url);
+        if (!$content) {
+            Cli::finish("Empty content!", "error");
+        }
         if (strstr($content, "Verificación Anti-Robots")) {
             Cli::finish("Captcha!", "error");
         }
