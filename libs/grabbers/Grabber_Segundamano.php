@@ -38,7 +38,7 @@ class Grabber_Segundamano
             Cli::finish("Empty content!", "error");
         }
         $title = get_between($content, "<title>", "</title>");
-        $websiteId = "segundamano.es".get_between($content, '<input type="hidden" name="id" value="', "'");
+        $websiteId = "segundamano.es".get_between($content, '<input type="hidden" name="id" value="', '"');
         Cli::output("Grabbing: ".$title, "notice");
         //Exists?
         if (!Car::getBy("websiteId", $websiteId)) {
