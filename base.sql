@@ -140,21 +140,21 @@ CREATE TABLE IF NOT EXISTS `modelos` (
 DROP VIEW IF EXISTS `avgCars`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `avgCars`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `avgCars` AS select count(`cars`.`id`) AS `num`,`cars`.`marca` AS `marca`,`cars`.`modelo` AS `modelo`,`cars`.`year` AS `year`,avg(`cars`.`price`) AS `media`,max(`cars`.`price`) AS `maximo`,min(`cars`.`price`) AS `minimo` from `cars` group by `cars`.`marcaId`,`cars`.`modeloId`,`cars`.`year`;
+CREATE ALGORITHM=VIEW `avgCars` AS select count(`cars`.`id`) AS `num`,`cars`.`marca` AS `marca`,`cars`.`modelo` AS `modelo`,`cars`.`year` AS `year`,avg(`cars`.`price`) AS `media`,max(`cars`.`price`) AS `maximo`,min(`cars`.`price`) AS `minimo` from `cars` group by `cars`.`marcaId`,`cars`.`modeloId`,`cars`.`year`;
 
 
 -- Dumping structure for view carCrawler.avgCars2
 DROP VIEW IF EXISTS `avgCars2`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `avgCars2`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `avgCars2` AS select count(`cars`.`id`) AS `num`,`cars`.`marca` AS `marca`,`cars`.`modelo` AS `modelo`,avg(`cars`.`price`) AS `media`,max(`cars`.`price`) AS `maximo`,min(`cars`.`price`) AS `minimo` from `cars` group by `cars`.`marcaId`,`cars`.`modeloId`;
+CREATE ALGORITHM=VIEW `avgCars2` AS select count(`cars`.`id`) AS `num`,`cars`.`marca` AS `marca`,`cars`.`modelo` AS `modelo`,avg(`cars`.`price`) AS `media`,max(`cars`.`price`) AS `maximo`,min(`cars`.`price`) AS `minimo` from `cars` group by `cars`.`marcaId`,`cars`.`modeloId`;
 
 
 -- Dumping structure for view carCrawler.carsOffers
 DROP VIEW IF EXISTS `carsOffers`;
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `carsOffers`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `carsOffers` AS select `c`.`marca` AS `marca`,`c`.`modelo` AS `modelo`,`c`.`price` AS `price`,`c`.`year` AS `year`,(select `a`.`num` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) AS `total`,(select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) AS `media`,((select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) - `c`.`price`) AS `dif`,`c`.`url` AS `url` from `cars` `c` order by ((select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) - `c`.`price`) desc;
+CREATE ALGORITHM=VIEW `carsOffers` AS select `c`.`marca` AS `marca`,`c`.`modelo` AS `modelo`,`c`.`price` AS `price`,`c`.`year` AS `year`,(select `a`.`num` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) AS `total`,(select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) AS `media`,((select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) - `c`.`price`) AS `dif`,`c`.`url` AS `url` from `cars` `c` order by ((select `a`.`media` from `avgCars2` `a` where ((`a`.`marca` = `c`.`marca`) and (`a`.`modelo` = `c`.`modelo`))) - `c`.`price`) desc;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
