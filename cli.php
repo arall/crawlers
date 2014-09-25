@@ -3,16 +3,13 @@
 error_reporting(E_ERROR | E_WARNING | E_PARSE);
 ini_set('display_errors', 1);
 
-//Configuration
-include 'config.php';
-
-//Composer autoload
-require 'vendor/autoload.php';
+//Bootstrap
+include 'libs/bootstrap.php';
 
 //Pharser options
 $options = array(
     'action' => array(
-        'description'   => 'Action',
+        'description'   => 'Action <cars | houses>',
         'type'          => Pharse::PHARSE_STRING,
         'required'        => true,
         'short'            => 'a',

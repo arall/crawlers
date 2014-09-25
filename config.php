@@ -8,7 +8,7 @@ ini_set("session.gc_maxlifetime","140000");
 //Config
 $_config['title'] = "";
 $_config['defaultLang'] = "en_GB";
-$_config['template'] = "";
+$_config['template'] = "bootstrap";
 $_config['defaultApp'] = "";
 $_config['defaultLimit'] = 30;
 $_config['debug'] = true;
@@ -26,7 +26,7 @@ $_config['mailFromName'] = "";
 $_config['dbHost'] = "localhost";
 $_config['dbUser'] = "root";
 $_config['dbPass'] = "";
-$_config['dbName'] = "crawlsers";
+$_config['dbName'] = "crawlers";
 
 //Urls/Paths
 $_config['path'] = dirname(__FILE__);
